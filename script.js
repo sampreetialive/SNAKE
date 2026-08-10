@@ -11,13 +11,21 @@
 const gameBoard = document.getElementById("gameBoard");
 
 const scoreElement = document.getElementById("score");
-const highScoreElement = document.getElementById("highScore");
 
-const statusText = document.getElementById("statusText");
+const highScoreElement =
+    document.getElementById("highScore");
 
-const startButton = document.getElementById("startButton");
-const pauseButton = document.getElementById("pauseButton");
-const restartButton = document.getElementById("restartButton");
+const statusText =
+    document.getElementById("statusText");
+
+const startButton =
+    document.getElementById("startButton");
+
+const pauseButton =
+    document.getElementById("pauseButton");
+
+const restartButton =
+    document.getElementById("restartButton");
 
 const gameOverOverlay =
     document.getElementById("gameOverOverlay");
@@ -132,9 +140,10 @@ let nextDirection = {
 
 let score = 0;
 
-let highScore = Number(
-    localStorage.getItem("snakeHighScore")
-) || 0;
+let highScore =
+    Number(
+        localStorage.getItem("snakeHighScore")
+    ) || 0;
 
 let gameSpeed = INITIAL_SPEED;
 
@@ -203,9 +212,14 @@ function initializeGame() {
 
     scoreElement.textContent = score;
 
-    statusText.textContent = "Press Start to Play";
+    statusText.textContent =
+        "Press Start to Play";
 
-    pauseButton.textContent = "Pause";
+    startButton.textContent =
+        "Start Game";
+
+    pauseButton.textContent =
+        "Pause";
 
 
     generateFood();
@@ -225,19 +239,23 @@ function startGame() {
         return;
     }
 
-    initializeAudio();
 
-    playStartSound();
+    /* Play start sound */
+
+    playSound(gameStartSound);
 
 
     gameRunning = true;
 
     gamePaused = false;
 
-    statusText.textContent = "Game Started!";
+
+    statusText.textContent =
+        "Game Started!";
 
 
-    startButton.textContent = "Playing...";
+    startButton.textContent =
+        "Playing...";
 
 
     gameLoop = setInterval(
@@ -254,8 +272,13 @@ function startGame() {
 
 function updateGame() {
 
-    if (!gameRunning || gamePaused) {
+    if (
+        !gameRunning ||
+        gamePaused
+    ) {
+
         return;
+
     }
 
 
@@ -264,9 +287,13 @@ function updateGame() {
 
     const head = {
 
-        x: snake[0].x + direction.x,
+        x:
+            snake[0].x +
+            direction.x,
 
-        y: snake[0].y + direction.y
+        y:
+            snake[0].y +
+            direction.y
 
     };
 
@@ -365,11 +392,16 @@ function isSnakeCollision(head) {
 
 function eatFood() {
 
-    playFoodSound();
+    /* Play eating sound */
+
+    playSound(eatSound);
+
 
     score++;
 
-    scoreElement.textContent = score;
+
+    scoreElement.textContent =
+        score;
 
 
     /* =====================================
@@ -380,7 +412,10 @@ function eatFood() {
 
         highScore = score;
 
-        highScoreElement.textContent = highScore;
+
+        highScoreElement.textContent =
+            highScore;
+
 
         localStorage.setItem(
             "snakeHighScore",
@@ -404,7 +439,8 @@ function eatFood() {
     increaseSpeed();
 
 
-    statusText.textContent = "Yum! Keep going!";
+    statusText.textContent =
+        "Yum! Keep going!";
 
 }
 
@@ -503,12 +539,16 @@ function drawGame() {
                 document.createElement("div");
 
 
-            snakeElement.classList.add("snake");
+            snakeElement.classList.add(
+                "snake"
+            );
 
 
             if (index === 0) {
 
-                snakeElement.classList.add("head");
+                snakeElement.classList.add(
+                    "head"
+                );
 
 
                 addSnakeEyes(
@@ -543,7 +583,9 @@ function drawGame() {
         document.createElement("div");
 
 
-    foodElement.classList.add("food");
+    foodElement.classList.add(
+        "food"
+    );
 
 
     foodElement.style.left =
@@ -586,9 +628,14 @@ function addSnakeEyes(snakeElement) {
     );
 
 
-    snakeElement.appendChild(leftEye);
+    snakeElement.appendChild(
+        leftEye
+    );
 
-    snakeElement.appendChild(rightEye);
+
+    snakeElement.appendChild(
+        rightEye
+    );
 
 }
 
@@ -613,7 +660,6 @@ function changeDirection(newDirection) {
         Prevent the snake from immediately
         reversing into itself.
     */
-
 
     if (
 
@@ -656,8 +702,10 @@ document.addEventListener(
             event.preventDefault();
 
             changeDirection({
+
                 x: 0,
                 y: -1
+
             });
 
         }
@@ -668,8 +716,10 @@ document.addEventListener(
             event.preventDefault();
 
             changeDirection({
+
                 x: 0,
                 y: 1
+
             });
 
         }
@@ -680,8 +730,10 @@ document.addEventListener(
             event.preventDefault();
 
             changeDirection({
+
                 x: -1,
                 y: 0
+
             });
 
         }
@@ -692,8 +744,10 @@ document.addEventListener(
             event.preventDefault();
 
             changeDirection({
+
                 x: 1,
                 y: 0
+
             });
 
         }
@@ -708,8 +762,10 @@ document.addEventListener(
             event.preventDefault();
 
             changeDirection({
+
                 x: 0,
                 y: -1
+
             });
 
         }
@@ -720,8 +776,10 @@ document.addEventListener(
             event.preventDefault();
 
             changeDirection({
+
                 x: 0,
                 y: 1
+
             });
 
         }
@@ -732,8 +790,10 @@ document.addEventListener(
             event.preventDefault();
 
             changeDirection({
+
                 x: -1,
                 y: 0
+
             });
 
         }
@@ -744,8 +804,10 @@ document.addEventListener(
             event.preventDefault();
 
             changeDirection({
+
                 x: 1,
                 y: 0
+
             });
 
         }
@@ -779,8 +841,10 @@ upButton.addEventListener(
     function() {
 
         changeDirection({
+
             x: 0,
             y: -1
+
         });
 
     }
@@ -795,8 +859,10 @@ downButton.addEventListener(
     function() {
 
         changeDirection({
+
             x: 0,
             y: 1
+
         });
 
     }
@@ -811,8 +877,10 @@ leftButton.addEventListener(
     function() {
 
         changeDirection({
+
             x: -1,
             y: 0
+
         });
 
     }
@@ -827,8 +895,10 @@ rightButton.addEventListener(
     function() {
 
         changeDirection({
+
             x: 1,
             y: 0
+
         });
 
     }
@@ -852,23 +922,32 @@ function togglePause() {
 
     if (gamePaused) {
 
-        playPauseSound();
+        playSound(pauseSound);
 
-        pauseButton.textContent = "Resume";
 
-        statusText.textContent = "Game Paused";
+        pauseButton.textContent =
+            "Resume";
+
+
+        statusText.textContent =
+            "Game Paused";
 
     } else {
 
-        playResumeSound();
+        playSound(pauseSound);
 
-        pauseButton.textContent = "Pause";
 
-        statusText.textContent = "Keep Going!";
+        pauseButton.textContent =
+            "Pause";
+
+
+        statusText.textContent =
+            "Keep Going!";
 
     }
 
 }
+
 
 /* =========================================
    END GAME
@@ -876,7 +955,10 @@ function togglePause() {
 
 function endGame() {
 
-    playGameOverSound();
+    /* Play game-over sound */
+
+    playSound(gameOverSound);
+
 
     gameRunning = false;
 
@@ -889,15 +971,20 @@ function endGame() {
     gameLoop = null;
 
 
-    startButton.textContent = "Start Game";
-
-    pauseButton.textContent = "Pause";
-
-
-    statusText.textContent = "Game Over";
+    startButton.textContent =
+        "Start Game";
 
 
-    finalScoreElement.textContent = score;
+    pauseButton.textContent =
+        "Pause";
+
+
+    statusText.textContent =
+        "Game Over";
+
+
+    finalScoreElement.textContent =
+        score;
 
 
     gameOverOverlay.classList.remove(
@@ -916,7 +1003,10 @@ function endGame() {
 
 function restartGame() {
 
-    playRestartSound();
+    /* Play restart sound */
+
+    playSound(restartSound);
+
 
     clearInterval(gameLoop);
 
@@ -997,9 +1087,11 @@ document.addEventListener(
     function(event) {
 
         if (
+
             event.target.closest(
                 ".mobile-controls"
             )
+
         ) {
 
             event.preventDefault();
