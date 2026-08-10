@@ -1,1 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="A modern Snake game built with HTML, CSS and JavaScript."
+    >
+
+    <title>Snake | Game</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+    <!-- ============================= -->
+    <!-- MAIN GAME CONTAINER -->
+    <!-- ============================= -->
+
+    <main class="game-container">
+
+
+        <!-- ============================= -->
+        <!-- GAME HEADER -->
+        <!-- ============================= -->
+
+        <header class="game-header">
+
+            <div class="title-section">
+
+                <p class="game-label">
+                    ARCADE GAME
+                </p>
+
+                <h1>
+                    SNAKE
+                </h1>
+
+                <p class="game-subtitle">
+                    Eat. Grow. Survive.
+                </p>
+
+            </div>
+
+
+            <!-- SCORE SECTION -->
+
+            <div class="score-section">
+
+                <div class="score-box">
+
+                    <span class="score-label">
+                        SCORE
+                    </span>
+
+                    <span
+                        id="score"
+                        class="score-value"
+                    >
+                        0
+                    </span>
+
+                </div>
+
+
+                <div class="score-box">
+
+                    <span class="score-label">
+                        HIGH SCORE
+                    </span>
+
+                    <span
+                        id="highScore"
+                        class="score-value"
+                    >
+                        0
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ============================= -->
+        <!-- GAME AREA -->
+        <!-- ============================= -->
+
+        <section class="game-section">
+
+
+            <!-- GAME BOARD -->
+
+            <div
+                id="gameBoard"
+                class="game-board"
+                aria-label="Snake game board"
+            >
+
+                <!--
+                    The snake and food will be
+                    generated here using JavaScript.
+                -->
+
+            </div>
+
+
+
+            <!-- ============================= -->
+            <!-- GAME STATUS -->
+            <!-- ============================= -->
+
+            <div
+                id="gameStatus"
+                class="game-status"
+            >
+
+                <span id="statusText">
+                    Press Start to Play
+                </span>
+
+            </div>
+
+
+
+            <!-- ============================= -->
+            <!-- GAME CONTROLS -->
+            <!-- ============================= -->
+
+            <div class="game-controls">
+
+                <button
+                    id="startButton"
+                    class="game-button primary-button"
+                    type="button"
+                >
+                    Start Game
+                </button>
+
+
+                <button
+                    id="pauseButton"
+                    class="game-button"
+                    type="button"
+                >
+                    Pause
+                </button>
+
+
+                <button
+                    id="restartButton"
+                    class="game-button"
+                    type="button"
+                >
+                    Restart
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ============================= -->
+        <!-- MOBILE CONTROLS -->
+        <!-- ============================= -->
+
+        <section
+            class="mobile-controls"
+            aria-label="Mobile game controls"
+        >
+
+            <button
+                class="direction-button"
+                id="upButton"
+                type="button"
+                aria-label="Move up"
+            >
+                ↑
+            </button>
+
+
+            <div class="horizontal-controls">
+
+                <button
+                    class="direction-button"
+                    id="leftButton"
+                    type="button"
+                    aria-label="Move left"
+                >
+                    ←
+                </button>
+
+
+                <button
+                    class="direction-button"
+                    id="downButton"
+                    type="button"
+                    aria-label="Move down"
+                >
+                    ↓
+                </button>
+
+
+                <button
+                    class="direction-button"
+                    id="rightButton"
+                    type="button"
+                    aria-label="Move right"
+                >
+                    →
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ============================= -->
+        <!-- GAME INSTRUCTIONS -->
+        <!-- ============================= -->
+
+        <section class="instructions">
+
+            <h2>
+                How to Play
+            </h2>
+
+
+            <div class="instruction-grid">
+
+                <div class="instruction-item">
+
+                    <span class="instruction-icon">
+                        ⌨
+                    </span>
+
+                    <div>
+
+                        <h3>
+                            Move
+                        </h3>
+
+                        <p>
+                            Use Arrow Keys or WASD
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="instruction-item">
+
+                    <span class="instruction-icon">
+                        ●
+                    </span>
+
+                    <div>
+
+                        <h3>
+                            Eat
+                        </h3>
+
+                        <p>
+                            Collect the food to grow
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="instruction-item">
+
+                    <span class="instruction-icon">
+                        !
+                    </span>
+
+                    <div>
+
+                        <h3>
+                            Survive
+                        </h3>
+
+                        <p>
+                            Don't hit the wall or yourself
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ============================= -->
+        <!-- FOOTER -->
+        <!-- ============================= -->
+
+        <footer class="game-footer">
+
+            <p>
+                Built with HTML, CSS & JavaScript
+            </p>
+
+        </footer>
+
+
+    </main>
+
+
+
+    <!-- ============================= -->
+    <!-- GAME OVER OVERLAY -->
+    <!-- ============================= -->
+
+    <div
+        id="gameOverOverlay"
+        class="game-over-overlay hidden"
+    >
+
+        <div class="game-over-card">
+
+            <p class="game-over-label">
+                GAME OVER
+            </p>
+
+            <h2>
+                Snake Bites Back!
+            </h2>
+
+            <p class="final-score-text">
+                Your Score
+            </p>
+
+            <span
+                id="finalScore"
+                class="final-score"
+            >
+                0
+            </span>
+
+            <button
+                id="playAgainButton"
+                class="game-button primary-button"
+                type="button"
+            >
+                Play Again
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ============================= -->
+    <!-- JAVASCRIPT -->
+    <!-- ============================= -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
