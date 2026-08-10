@@ -19,276 +19,79 @@ const startButton = document.getElementById("startButton");
 const pauseButton = document.getElementById("pauseButton");
 const restartButton = document.getElementById("restartButton");
 
-const gameOverOverlay = document.getElementById("gameOverOverlay");
-const finalScoreElement = document.getElementById("finalScore");
-const playAgainButton = document.getElementById("playAgainButton");
+const gameOverOverlay =
+    document.getElementById("gameOverOverlay");
 
-const upButton = document.getElementById("upButton");
-const downButton = document.getElementById("downButton");
-const leftButton = document.getElementById("leftButton");
-const rightButton = document.getElementById("rightButton");
+const finalScoreElement =
+    document.getElementById("finalScore");
+
+const playAgainButton =
+    document.getElementById("playAgainButton");
+
+const upButton =
+    document.getElementById("upButton");
+
+const downButton =
+    document.getElementById("downButton");
+
+const leftButton =
+    document.getElementById("leftButton");
+
+const rightButton =
+    document.getElementById("rightButton");
 
 
 /* =========================================
    SOUND EFFECTS
 ========================================= */
 
-let audioContext = null;
+const eatSound =
+    new Audio("sounds/eat.wav");
+
+const gameStartSound =
+    new Audio("sounds/game-start.wav");
+
+const pauseSound =
+    new Audio("sounds/pause.wav");
+
+const restartSound =
+    new Audio("sounds/restart.wav");
+
+const gameOverSound =
+    new Audio("sounds/game-over.wav");
 
 
 /* =========================================
-   CREATE AUDIO CONTEXT
+   SOUND SETTINGS
 ========================================= */
 
-function initializeAudio() {
+eatSound.volume = 0.5;
 
-    if (!audioContext) {
+gameStartSound.volume = 0.6;
 
-        audioContext =
-            new (
-                window.AudioContext ||
-                window.webkitAudioContext
-            )();
+pauseSound.volume = 0.5;
 
-    }
+restartSound.volume = 0.5;
 
-
-    if (audioContext.state === "suspended") {
-
-        audioContext.resume();
-
-    }
-
-}
+gameOverSound.volume = 0.7;
 
 
 /* =========================================
-   PLAY TONE
+   PLAY SOUND
 ========================================= */
 
-function playTone(
-    frequency,
-    duration,
-    type = "sine",
-    volume = 0.08
-) {
+function playSound(sound) {
 
-    initializeAudio();
+    sound.currentTime = 0;
 
+    sound.play().catch(error => {
 
-    const oscillator =
-        audioContext.createOscillator();
-
-    const gainNode =
-        audioContext.createGain();
-
-
-    oscillator.type = type;
-
-    oscillator.frequency.setValueAtTime(
-        frequency,
-        audioContext.currentTime
-    );
-
-
-    gainNode.gain.setValueAtTime(
-        0,
-        audioContext.currentTime
-    );
-
-
-    gainNode.gain.linearRampToValueAtTime(
-        volume,
-        audioContext.currentTime + 0.01
-    );
-
-
-    gainNode.gain.exponentialRampToValueAtTime(
-        0.001,
-        audioContext.currentTime + duration
-    );
-
-
-    oscillator.connect(gainNode);
-
-    gainNode.connect(
-        audioContext.destination
-    );
-
-
-    oscillator.start();
-
-    oscillator.stop(
-        audioContext.currentTime + duration
-    );
-
-}
-
-
-/* =========================================
-   FOOD SOUND
-========================================= */
-
-function playFoodSound() {
-
-    playTone(
-        650,
-        0.08,
-        "square",
-        0.06
-    );
-
-
-    setTimeout(() => {
-
-        playTone(
-            900,
-            0.1,
-            "square",
-            0.05
+        console.log(
+            "Sound could not be played:",
+            error
         );
 
-    }, 60);
-
-}
-
-
-/* =========================================
-   START SOUND
-========================================= */
-
-function playStartSound() {
-
-    playTone(
-        400,
-        0.08,
-        "sine",
-        0.05
-    );
-
-
-    setTimeout(() => {
-
-        playTone(
-            600,
-            0.08,
-            "sine",
-            0.05
-        );
-
-    }, 80);
-
-
-    setTimeout(() => {
-
-        playTone(
-            850,
-            0.12,
-            "sine",
-            0.06
-        );
-
-    }, 160);
-
-}
-
-
-/* =========================================
-   PAUSE SOUND
-========================================= */
-
-function playPauseSound() {
-
-    playTone(
-        500,
-        0.12,
-        "triangle",
-        0.05
-    );
-
-}
-
-
-/* =========================================
-   RESUME SOUND
-========================================= */
-
-function playResumeSound() {
-
-    playTone(
-        700,
-        0.12,
-        "triangle",
-        0.05
-    );
-
-}
-
-
-/* =========================================
-   GAME OVER SOUND
-========================================= */
-
-function playGameOverSound() {
-
-    playTone(
-        500,
-        0.15,
-        "sawtooth",
-        0.06
-    );
-
-
-    setTimeout(() => {
-
-        playTone(
-            350,
-            0.15,
-            "sawtooth",
-            0.06
-        );
-
-    }, 130);
-
-
-    setTimeout(() => {
-
-        playTone(
-            220,
-            0.3,
-            "sawtooth",
-            0.07
-        );
-
-    }, 260);
-
-}
-
-
-/* =========================================
-   RESTART SOUND
-========================================= */
-
-function playRestartSound() {
-
-    playTone(
-        300,
-        0.08,
-        "triangle",
-        0.05
-    );
-
-
-    setTimeout(() => {
-
-        playTone(
-            500,
-            0.1,
-            "triangle",
-            0.05
-        );
-
-    }, 80);
+    });
 
 }
 
