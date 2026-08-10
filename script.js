@@ -30,6 +30,270 @@ const rightButton = document.getElementById("rightButton");
 
 
 /* =========================================
+   SOUND EFFECTS
+========================================= */
+
+let audioContext = null;
+
+
+/* =========================================
+   CREATE AUDIO CONTEXT
+========================================= */
+
+function initializeAudio() {
+
+    if (!audioContext) {
+
+        audioContext =
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+
+    }
+
+
+    if (audioContext.state === "suspended") {
+
+        audioContext.resume();
+
+    }
+
+}
+
+
+/* =========================================
+   PLAY TONE
+========================================= */
+
+function playTone(
+    frequency,
+    duration,
+    type = "sine",
+    volume = 0.08
+) {
+
+    initializeAudio();
+
+
+    const oscillator =
+        audioContext.createOscillator();
+
+    const gainNode =
+        audioContext.createGain();
+
+
+    oscillator.type = type;
+
+    oscillator.frequency.setValueAtTime(
+        frequency,
+        audioContext.currentTime
+    );
+
+
+    gainNode.gain.setValueAtTime(
+        0,
+        audioContext.currentTime
+    );
+
+
+    gainNode.gain.linearRampToValueAtTime(
+        volume,
+        audioContext.currentTime + 0.01
+    );
+
+
+    gainNode.gain.exponentialRampToValueAtTime(
+        0.001,
+        audioContext.currentTime + duration
+    );
+
+
+    oscillator.connect(gainNode);
+
+    gainNode.connect(
+        audioContext.destination
+    );
+
+
+    oscillator.start();
+
+    oscillator.stop(
+        audioContext.currentTime + duration
+    );
+
+}
+
+
+/* =========================================
+   FOOD SOUND
+========================================= */
+
+function playFoodSound() {
+
+    playTone(
+        650,
+        0.08,
+        "square",
+        0.06
+    );
+
+
+    setTimeout(() => {
+
+        playTone(
+            900,
+            0.1,
+            "square",
+            0.05
+        );
+
+    }, 60);
+
+}
+
+
+/* =========================================
+   START SOUND
+========================================= */
+
+function playStartSound() {
+
+    playTone(
+        400,
+        0.08,
+        "sine",
+        0.05
+    );
+
+
+    setTimeout(() => {
+
+        playTone(
+            600,
+            0.08,
+            "sine",
+            0.05
+        );
+
+    }, 80);
+
+
+    setTimeout(() => {
+
+        playTone(
+            850,
+            0.12,
+            "sine",
+            0.06
+        );
+
+    }, 160);
+
+}
+
+
+/* =========================================
+   PAUSE SOUND
+========================================= */
+
+function playPauseSound() {
+
+    playTone(
+        500,
+        0.12,
+        "triangle",
+        0.05
+    );
+
+}
+
+
+/* =========================================
+   RESUME SOUND
+========================================= */
+
+function playResumeSound() {
+
+    playTone(
+        700,
+        0.12,
+        "triangle",
+        0.05
+    );
+
+}
+
+
+/* =========================================
+   GAME OVER SOUND
+========================================= */
+
+function playGameOverSound() {
+
+    playTone(
+        500,
+        0.15,
+        "sawtooth",
+        0.06
+    );
+
+
+    setTimeout(() => {
+
+        playTone(
+            350,
+            0.15,
+            "sawtooth",
+            0.06
+        );
+
+    }, 130);
+
+
+    setTimeout(() => {
+
+        playTone(
+            220,
+            0.3,
+            "sawtooth",
+            0.07
+        );
+
+    }, 260);
+
+}
+
+
+/* =========================================
+   RESTART SOUND
+========================================= */
+
+function playRestartSound() {
+
+    playTone(
+        300,
+        0.08,
+        "triangle",
+        0.05
+    );
+
+
+    setTimeout(() => {
+
+        playTone(
+            500,
+            0.1,
+            "triangle",
+            0.05
+        );
+
+    }, 80);
+
+}
+
+
+/* =========================================
    GAME SETTINGS
 ========================================= */
 
@@ -157,6 +421,10 @@ function startGame() {
     if (gameRunning) {
         return;
     }
+
+    initializeAudio();
+
+    playStartSound();
 
 
     gameRunning = true;
@@ -293,6 +561,8 @@ function isSnakeCollision(head) {
 ========================================= */
 
 function eatFood() {
+
+    playFoodSound();
 
     score++;
 
@@ -779,11 +1049,15 @@ function togglePause() {
 
     if (gamePaused) {
 
+        playPauseSound();
+
         pauseButton.textContent = "Resume";
 
         statusText.textContent = "Game Paused";
 
     } else {
+
+        playResumeSound();
 
         pauseButton.textContent = "Pause";
 
@@ -793,12 +1067,13 @@ function togglePause() {
 
 }
 
-
 /* =========================================
    END GAME
 ========================================= */
 
 function endGame() {
+
+    playGameOverSound();
 
     gameRunning = false;
 
@@ -837,6 +1112,8 @@ function endGame() {
 ========================================= */
 
 function restartGame() {
+
+    playRestartSound();
 
     clearInterval(gameLoop);
 
